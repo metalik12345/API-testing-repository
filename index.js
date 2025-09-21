@@ -37,7 +37,7 @@ async function connectAndQuery() {
 
 app.get('/api/data', async (req, res) => {
   try {
-    await sql.connect(dbConfig);
+    await sql.connect(Config);
     const result = await pool.request().query('SELECT * FROM dbo.[@ONE_SCMT_APP_VIA_SSR]');
     res.json(result.recordset);
   } catch (err) {
@@ -47,10 +47,10 @@ app.get('/api/data', async (req, res) => {
 });
 
 // POST endpoint to insert data
-app.post('/api/data', async (req, res) => {
+app.post('/api/receipt', async (req, res) => {
   const { name } = req.body;  // Assuming you're sending a name parameter
   try {
-    await sql.connect(dbConfig);
+    await sql.connect(Config);
     await sql.query`INSERT INTO your_table (name) VALUES (${name})`;
     res.status(201).send('Data inserted successfully');
   } catch (err) {
